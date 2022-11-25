@@ -24,6 +24,22 @@ const run = async () => {
     try {
             const categoriesCollection = client.db("quickSellDb").collection("bikeCategories");
             const categoryCollection = client.db("quickSellDb").collection("category");
+            const bookingCollection = client.db("quickSellDb").collection("booking");
+            //get my orders
+            app.get('/booking', async(req,res)=>{
+                const email =req.query.email;
+                const query = { email: email }
+                const booked = await bookingCollection.find(query).toArray();
+                res.send(booked)
+            })
+
+            // bike booked
+            app.post('/booking', async(req,res)=>{
+                const booking = req.body;
+               const result = await bookingCollection.insertOne(booking)
+                res.send(result);
+            })
+
 
             app.get('/category/:id', async(req,res)=>{
                 const id =req.params.id;
