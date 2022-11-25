@@ -23,8 +23,14 @@ const run = async () => {
 
     try {
             const categoriesCollection = client.db("quickSellDb").collection("bikeCategories");
+            const categoryCollection = client.db("quickSellDb").collection("category");
 
-
+            app.get('/category/:id', async(req,res)=>{
+                const id =req.params.id;
+                const query ={category_id:id}
+                const result = await categoryCollection.find(query).toArray();
+                res.send(result)
+            })
 
              app.get('/categories', async(req,res) => {
                 const query ={}
