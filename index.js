@@ -40,6 +40,13 @@ const run = async () => {
         //     res.send(result)
         // })
 
+        app.get('users/admin/:email', async (req,res) => {
+                const email =req.params.email;
+                const filter ={email};
+                const user = await usersCollection.findOne(filter)
+                res.send({isAdmin:user?.role == 'admin'})
+        })
+
         //delete Sellers
         app.delete('/usersRole/sellers/:id', async (req, res) => {
             const id = req.params.id;
