@@ -23,6 +23,29 @@ const run = async () => {
             const categoryCollection = client.db("quickSellDb").collection("category");
             const bookingCollection = client.db("quickSellDb").collection("booking");
             const paymentCollection = client.db("quickSellDb").collection("payment");
+            const usersCollection = client.db("quickSellDb").collection("users");
+
+
+            // app.put('/buyers/admin/:id', async (req, res) => {
+            //     const id = req.params.id;
+            //     const filter = { _id: ObjectId(id) }
+            //     const options = { upsert: true };
+            //     const updateDoc = {
+            //         $set: {
+            //             role: 'admin'
+            //         }
+            //     }
+    
+            //     const result = await buyersCollection.updateOne(filter, updateDoc, options)
+            //     res.send(result)
+            // })
+            
+            //users insert on database
+          app.post('/users', async (req,res)=>{
+            const users =req.body;
+            const result =await usersCollection.insertOne(users);
+            res.send(result);
+          })
 
 
             app.post('/payment-intent', async (req, res) => {
