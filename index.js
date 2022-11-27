@@ -41,6 +41,23 @@ const run = async () => {
             // })
             
             //users insert on database
+
+        app.delete('/usersRole/buyers/:id', async(req,res)=>{
+            const id =req.params.id;
+            const filter={_id: ObjectId(id)}
+            const result =await usersCollection.deleteOne(filter);
+            res.send(result);
+        })
+
+        
+
+        //get buyers
+        app.get('/usersRole/buyers', async(req,res)=>{
+            const query = {role: 'buyers'};
+            const user = await usersCollection.find(query).toArray();
+            res.send(user)
+        })
+
           app.post('/users', async (req,res)=>{
             const users =req.body;
             const result =await usersCollection.insertOne(users);
