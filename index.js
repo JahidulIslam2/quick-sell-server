@@ -53,20 +53,6 @@ const run = async () => {
         })
 
 
-        // app.put('/buyers/admin/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const filter = { _id: ObjectId(id) }
-        //     const options = { upsert: true };
-        //     const updateDoc = {
-        //         $set: {
-        //             role: 'admin'
-        //         }
-        //     }
-
-        //     const result = await buyersCollection.updateOne(filter, updateDoc, options)
-        //     res.send(result)
-        // })
-
         //check is a admin?
         app.get('/users/admin/:email', async (req, res) => {
             const email = req.params.email;
@@ -74,6 +60,7 @@ const run = async () => {
             const user = await usersCollection.findOne(filter)
             res.send({ isAdmin: user?.role === 'admin' })
         })
+
 
         //check  sellers 
         app.get('/users/sellers/:email', async(req,res) =>{
