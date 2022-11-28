@@ -24,18 +24,33 @@ const run = async () => {
         const bookingCollection = client.db("quickSellDb").collection("booking");
         const paymentCollection = client.db("quickSellDb").collection("payment");
         const usersCollection = client.db("quickSellDb").collection("users");
-        const myProductCollection = client.db("quickSellDb").collection("myProduct")
+        const myProductCollection = client.db("quickSellDb").collection("myProduct");
 
+        //delete my product
+        app.delete('/myProduct/:id', async (req, res)=>{
+            const id=req.params.id;
+            const filter= {_id: ObjectId(id)}
+            const result = await myProductCollection.deleteOne(filter);
+            res.send(result)
 
+        })
+        
 
-        app.post('/myProduct', async (req, res) => {
-            const product =req.body;
-            const result = await myProductCollection.insertOne(product)
-            res.send(result);
+        //get my product
+        app.get('/myProduct', async (req, res) => {
+            const email = req.query.email;
+            const filter = { email: email };
+            const product = await myProductCollection.find(filter).toArray();
+            res.send(product);
         })
 
 
-
+        //my product insert database
+        app.post('/myProduct', async (req, res) => {
+            const product = req.body;
+            const result = await myProductCollection.insertOne(product)
+            res.send(result);
+        })
 
 
         // app.put('/buyers/admin/:id', async (req, res) => {
@@ -76,6 +91,7 @@ const run = async () => {
             const result = await usersCollection.deleteOne(filter);
             res.send(result);
         })
+
 
         //get all sellers
         app.get('/usersRole/sellers', async (req, res) => {
@@ -133,7 +149,6 @@ const run = async () => {
             const updateResult = await bookingCollection.updateOne(filter, updateDoc)
             res.send(result);
         })
-
 
 
         app.get('/booking/:id', async (req, res) => {
