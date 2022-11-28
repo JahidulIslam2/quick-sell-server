@@ -24,6 +24,18 @@ const run = async () => {
         const bookingCollection = client.db("quickSellDb").collection("booking");
         const paymentCollection = client.db("quickSellDb").collection("payment");
         const usersCollection = client.db("quickSellDb").collection("users");
+        const myProductCollection = client.db("quickSellDb").collection("myProduct")
+
+
+
+        app.post('/myProduct', async (req, res) => {
+            const product =req.body;
+            const result = await myProductCollection.insertOne(product)
+            res.send(result);
+        })
+
+
+
 
 
         // app.put('/buyers/admin/:id', async (req, res) => {
