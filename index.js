@@ -72,7 +72,22 @@ const run = async () => {
             const email = req.params.email;
             const filter = { email };
             const user = await usersCollection.findOne(filter)
-            res.send({ isAdmin: user?.role == 'admin' })
+            res.send({ isAdmin: user?.role === 'admin' })
+        })
+
+        //check  sellers 
+        app.get('/users/sellers/:email', async(req,res) =>{
+            const email =req.params.email;
+            const filter ={email};
+            const user = await usersCollection.findOne(filter)
+            res.send({isSellers: user?.role === 'sellers' })
+        })
+
+        app.get('/users/buyers/:email', async(req,res) =>{
+            const email =req.params.email;
+            const filter ={email};
+            const user = await usersCollection.findOne(filter)
+            res.send({isBuyers: user?.role === 'buyers' })
         })
 
         //delete Sellers
